@@ -18,6 +18,9 @@ add constraint FK_question_tag foreign key(q_tag) references Tag(tag_id);
 alter table Question
 add constraint FK_question_exam foreign key(q_exam) references Examination(e_id);
 
+alter table Question
+add constraint FK_question_radio foreign key(q_radio) references RadioResource(rr_id);
+
 alter table Examination
 add constraint FK_exam_type foreign key(e_type) references Type(t_id);
 

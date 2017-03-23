@@ -11,6 +11,8 @@ create table User(
 	u_place int
 )charset=utf8;
 
+alter table User add u_sign varchar(50);
+
 drop table if exists Question;
 create table Question(
 	q_id char(16) primary key not null,
