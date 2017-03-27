@@ -48,9 +48,23 @@ public class SQLConstant {
 
     public static final String SQL_PROCEDURE_LOGIN = "{call login(?,?,?)}";
 
+    public static final String SQL_PROCEDURE_MODIFY_AGE = "{call modifyAge(?,?,?)}";
+
+    public static final String SQL_PROCEDURE_MODIFY_HEADER = "{call modifyHeader(?,?,?)}";
+
+    public static final String SQL_PROCEDURE_MODIFY_NICK = "{call modifyNickName(?,?,?)}";
+
+    public static final String SQL_PROCEDURE_MODIFY_PLACE = "{call modifyPlace(?,?,?)}";
+
+    public static final String SQL_PROCEDURE_MODIFY_SEX = "{call modifySex(?,?,?)}";
+
+    public static final String SQL_PROCEDURE_MODIFY_SIGN = "{call modifySign(?,?,?)}";
+
     public static final String SQL_GET_USER_ID_EXCEPTION = "获取用户ID的数据库操作出错";
 
     public static final String SQL_REGISTER_EXCEPTION = "注册出错";
 
     public static final String SQL_LOGIN_EXCEPTION = "登录出错";
+
+    public static final String SQL_MODIFY_MESSAGE_EXCEPTION = "修改信息出错";
 }

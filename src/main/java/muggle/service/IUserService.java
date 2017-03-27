@@ -9,5 +9,6 @@ public interface IUserService {
 
     public abstract String login(String phone,String password);
 
+    public abstract String modify(String id,Object param,int column);
 
 }

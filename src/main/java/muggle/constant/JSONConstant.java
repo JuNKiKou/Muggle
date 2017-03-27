@@ -29,6 +29,8 @@ public class JSONConstant {
 
     public static final String ACCOUNT_PASSWORD_WRONG = "ACCOUNT_PASSWORD_WRONG";
 
+    public static final String MODIFY_MESSAGE_ERROR = "MODIFY_MESSAGE_ERROR";
+
     private static Map<String,Integer> instance = new HashMap<String, Integer>();
 
     static {
@@ -37,6 +39,7 @@ public class JSONConstant {
         instance.put(SQL_EXECUTE_EXCEPTION,101);
         instance.put(ACCOUNT_IS_EXISTS,200);
         instance.put(ACCOUNT_PASSWORD_WRONG,201);
+        instance.put(MODIFY_MESSAGE_ERROR,202);
         instance.put(SUCCESS,400);
     }
 

@@ -14,4 +14,14 @@ public class RequestParamConstant {
 
     public static final String PASSWORD = "password";
 
+    public static final String PARAM = "param";
+
+    public static final String ID = "id";
+
+    public static final String COLUMN = "column";
+
+    public static final String REQUEST_PARAM_INVALID = "请求参数无效";
+
+    public static final String REQUEST_CONTENT_TYPE_INVALID = "请求的类型无效";
+
 }

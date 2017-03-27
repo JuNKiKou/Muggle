@@ -10,6 +10,7 @@ import muggle.entity.EUser;
 import muggle.tools.FormateId;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.sql.*;
 
 /**
@@ -146,5 +147,81 @@ public class UserDao extends GeneralDao implements IUser{
 
 
         return result.toString();
+    }
+
+    public String modifyAge(String id, int age) {
+
+        String sql = SQLConstant.SQL_PROCEDURE_MODIFY_AGE;
+        return modify(sql,id,age,1);
+    }
+
+    public String modifyHeader(String id, String header) {
+        String sql = SQLConstant.SQL_PROCEDURE_MODIFY_HEADER;
+        return modify(sql,id,header,0);
+    }
+
+    public String modifyNickName(String id, String nick) {
+        String sql = SQLConstant.SQL_PROCEDURE_MODIFY_NICK;
+
+        return modify(sql,id,nick,0);
+    }
+
+    public String modifySex(String id, boolean sex) {
+        String sql = SQLConstant.SQL_PROCEDURE_MODIFY_SEX;
+        return modify(sql,id,sex,2);
+    }
+
+    public String modifySign(String id, String sign) {
+        String sql = SQLConstant.SQL_PROCEDURE_MODIFY_SIGN;
+        return modify(sql,id,sign,0);
+    }
+
+    public String modifyPlace(String id, int place) {
+        String sql = SQLConstant.SQL_PROCEDURE_MODIFY_PLACE;
+        return modify(sql,id,place,1);
+    }
+
+    private String modify(String sql,String id,Object param,int flag){
+        JSONObject object = new JSONObject();
+        Connection connection = getConnection();
+        int resultCode;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,id);
+            switch (flag){
+
+                case 0:
+                    statement.setString(2,(String) param);
+                    break;
+                case 1:
+                    statement.setInt(2,(Integer) param);
+                    break;
+                case 2:
+                    statement.setBoolean(2,(Boolean) param);
+                    break;
+                default:
+                    statement.setString(2,(String) param);
+                    break;
+
+            }
+            statement.registerOutParameter(3,Types.INTEGER);
+            statement.close();
+            int code = statement.getInt(3);
+            if (code == 1){
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+            }else {
+                resultCode = JSONConstant.getStatusCode(JSONConstant.MODIFY_MESSAGE_ERROR);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_MODIFY_MESSAGE_EXCEPTION);
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+
+        return object.toString();
+
     }
 }
