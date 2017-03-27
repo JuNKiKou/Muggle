@@ -12,4 +12,6 @@ public class FileConstant {
 
     public static final String FILE_SAVE_EXCEPTION = "文件保存失败";
 
+    public static final String FILE_MESSAGE_FETCH_EXCEPTION = "文件信息获取失败";
+
 }

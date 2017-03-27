@@ -2,15 +2,13 @@ package muggle.helper;/**
  * Created by JuN on 2017/3/26.
  */
 
-import muggle.constant.EncodingConstant;
-import muggle.constant.FileConstant;
-import muggle.constant.FilePathConstant;
-import muggle.constant.RequestParamConstant;
+import muggle.constant.*;
 import muggle.tools.FormateTime;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.json.JSONObject;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +27,7 @@ import java.util.UUID;
 public class UploadFileHelper {
 
     public static String uploadHeader(ServletContext context,HttpServletRequest request, HttpServletResponse response){
-
+        JSONObject object = new JSONObject();
         String savePath = context.getRealPath(FilePathConstant.USER_HEADER_SAVE_PATH);
         File dir = new File(savePath);
         String path = "";
@@ -57,7 +55,26 @@ public class UploadFileHelper {
             for (FileItem item : list){
                 if (item.isFormField()){
                     //普通输入项
-
+                    //获取id和column
+                    String name = item.getFieldName();
+                    if (name.equals(RequestParamConstant.ID)){
+                        try {
+                            String value = item.getString(EncodingConstant.UTF8);
+                            object.put(RequestParamConstant.ID,value);
+                        } catch (UnsupportedEncodingException e) {
+                            System.out.println(FileConstant.FILE_MESSAGE_FETCH_EXCEPTION);
+                            e.printStackTrace();
+                        }
+                    }else if (name.equals(RequestParamConstant.COLUMN)){
+                        try {
+                            String value = item.getString(EncodingConstant.UTF8);
+                            int column = Integer.parseInt(value);
+                            object.put(RequestParamConstant.COLUMN,column);
+                        } catch (UnsupportedEncodingException e) {
+                            System.out.println(FileConstant.FILE_MESSAGE_FETCH_EXCEPTION);
+                            e.printStackTrace();
+                        }
+                    }
                 }else {
                     //文件项
                     String fileName = item.getName();
@@ -85,8 +102,9 @@ public class UploadFileHelper {
             System.out.println(FileConstant.FILE_SAVE_EXCEPTION);
             e.printStackTrace();
         }
+        object.put(JSONConstant.HEADER_PATH,path);
 
-        return path;
+        return object.toString();
 
     }
 
