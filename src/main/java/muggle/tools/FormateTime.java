@@ -15,7 +15,7 @@ public class FormateTime {
 
     public static String getCurrentTime(){
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd&HH:mm:ss");
         String now = format.format(date);
         return now;
     }

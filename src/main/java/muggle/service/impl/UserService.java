@@ -46,20 +46,20 @@ public class UserService implements IUserService{
         return dao.login(phone,password);
     }
 
-    public String modify(String id, Object param, int column) {
+    public String modify(String id, String param, int column) {
         switch (column){
             case AGE:
-                return dao.modifyAge(id,(Integer) param);
+                return dao.modifyAge(id,Integer.parseInt(param));
             case HEADER:
-                return dao.modifyHeader(id,(String) param);
+                return dao.modifyHeader(id, param);
             case NICK:
-                return dao.modifyNickName(id,(String) param);
+                return dao.modifyNickName(id, param);
             case PLACE:
-                return dao.modifyPlace(id,(Integer) param);
+                return dao.modifyPlace(id,Integer.parseInt(param));
             case SEX:
-                return dao.modifySex(id,(Boolean) param);
+                return dao.modifySex(id,Boolean.parseBoolean(param));
             case SIGN:
-                return dao.modifySign(id,(String) param);
+                return dao.modifySign(id,param);
             default:
                 System.out.println(RequestParamConstant.REQUEST_PARAM_INVALID);
                 break;

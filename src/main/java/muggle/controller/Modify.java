@@ -27,7 +27,7 @@ public class Modify extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter(RequestParamConstant.ID);
         String index = req.getParameter(RequestParamConstant.COLUMN);
-        Object param = req.getParameter(RequestParamConstant.PARAM);
+        String param = req.getParameter(RequestParamConstant.PARAM);
         int column = Integer.parseInt(index);
         String result = service.modify(id,param,column);
         JsonHelper.showJson(resp,result);

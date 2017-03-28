@@ -205,7 +205,7 @@ public class UserDao extends GeneralDao implements IUser{
 
             }
             statement.registerOutParameter(3,Types.INTEGER);
-            statement.close();
+            statement.execute();
             int code = statement.getInt(3);
             if (code == 1){
                 resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
