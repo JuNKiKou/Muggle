@@ -26,6 +26,11 @@
         <servlet-class>muggle.controller.ModifyHeader</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>modifyPassword</servlet-name>
+        <servlet-class>muggle.controller.ModifyPassword</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -44,5 +49,10 @@
     <servlet-mapping>
         <servlet-name>modifyHeader</servlet-name>
         <url-pattern>/modifyHeader</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>modifyPassword</servlet-name>
+        <url-pattern>/modifyPassword</url-pattern>
     </servlet-mapping>
 </web-app>

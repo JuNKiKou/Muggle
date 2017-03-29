@@ -33,6 +33,8 @@ public class JSONConstant {
 
     public static final String MODIFY_MESSAGE_ERROR = "MODIFY_MESSAGE_ERROR";
 
+    public static final String ACCOUNT_IS_NOT_EXISTS = "ACCOUNT_IS_NOT_EXISTS";
+
     public static final String JSON_ANALYZE_ERROR = "JSON_ANALYZE_ERROR";
 
     private static Map<String,Integer> instance = new HashMap<String, Integer>();
@@ -41,6 +43,7 @@ public class JSONConstant {
 
         instance.put(DEFAULT_RESULT_CODE,100);
         instance.put(SQL_EXECUTE_EXCEPTION,101);
+        instance.put(ACCOUNT_IS_NOT_EXISTS,199);
         instance.put(ACCOUNT_IS_EXISTS,200);
         instance.put(ACCOUNT_PASSWORD_WRONG,201);
         instance.put(MODIFY_MESSAGE_ERROR,202);

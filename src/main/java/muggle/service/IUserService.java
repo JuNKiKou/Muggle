@@ -11,4 +11,5 @@ public interface IUserService {
 
     public abstract String modify(String id,String param,int column);
 
+    public abstract String modifyPassword(String id,String o_pwd,String n_pwd);
 }

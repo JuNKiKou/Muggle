@@ -20,6 +20,10 @@ public class RequestParamConstant {
 
     public static final String COLUMN = "column";
 
+    public static final String OLD_PASSWORD = "o_pwd";
+
+    public static final String NEW_PASSWORD = "n_pwd";
+
     public static final String REQUEST_PARAM_INVALID = "请求参数无效";
 
     public static final String REQUEST_CONTENT_TYPE_INVALID = "请求的类型无效";

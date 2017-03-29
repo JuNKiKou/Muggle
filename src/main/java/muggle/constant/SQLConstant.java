@@ -60,6 +60,8 @@ public class SQLConstant {
 
     public static final String SQL_PROCEDURE_MODIFY_SIGN = "{call modifySign(?,?,?)}";
 
+    public static final String SQL_PROCEDURE_MODIFY_PWD = "{call modifyPassword(?,?,?,?)}";
+
     public static final String SQL_GET_USER_ID_EXCEPTION = "获取用户ID的数据库操作出错";
 
     public static final String SQL_REGISTER_EXCEPTION = "注册出错";

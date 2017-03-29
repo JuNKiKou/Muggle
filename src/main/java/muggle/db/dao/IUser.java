@@ -21,4 +21,6 @@ public interface IUser {
 
     public abstract String modifyPlace(String id,int place);
 
+    public abstract String modifyPassword(String id,String o_pwd,String n_pwd);
+
 }

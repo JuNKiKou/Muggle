@@ -66,4 +66,8 @@ public class UserService implements IUserService{
         }
         return null;
     }
+
+    public String modifyPassword(String id, String o_pwd, String n_pwd) {
+        return dao.modifyPassword(id,o_pwd,n_pwd);
+    }
 }

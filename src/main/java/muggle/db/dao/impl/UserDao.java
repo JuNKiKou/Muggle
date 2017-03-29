@@ -224,4 +224,44 @@ public class UserDao extends GeneralDao implements IUser{
         return object.toString();
 
     }
+
+    public String modifyPassword(String id, String o_pwd, String n_pwd) {
+        JSONObject object = new JSONObject();
+        Connection connection = getConnection();
+        String sql = SQLConstant.SQL_PROCEDURE_MODIFY_PWD;
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,id);
+            statement.setString(2,o_pwd);
+            statement.setString(3,n_pwd);
+            statement.registerOutParameter(4,Types.INTEGER);
+            statement.execute();
+            int code = statement.getInt(4);
+            switch (code){
+                case 1:
+                    resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+                    break;
+                case 0:
+                    //没有这样的用户
+                    resultCode = JSONConstant.getStatusCode(JSONConstant.ACCOUNT_IS_NOT_EXISTS);
+                    break;
+                case -1:
+                    //账号密码错误
+                    resultCode = JSONConstant.getStatusCode(JSONConstant.ACCOUNT_PASSWORD_WRONG);
+                    break;
+                default:
+                    resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+                    break;
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_MODIFY_MESSAGE_EXCEPTION);
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        return object.toString();
+    }
 }
