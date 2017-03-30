@@ -614,7 +614,7 @@ public class UserDao extends GeneralDao implements IUser{
         closeConnection(connection);
         object.put(JSONConstant.RESULT_CODE,resultCode);
         object.put(JSONConstant.ANSWER,answer);
-        return null;
+        return object.toString();
     }
 }
 
