@@ -463,20 +463,17 @@ public class UserDao extends GeneralDao implements IUser{
         int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
         String sql = SQLConstant.SQL_PROCEDURE_GET_RESOURCE;
         String path = null;
-        String volidate = null;
         Resource resource = new Resource();
         try {
             CallableStatement statement  = connection.prepareCall(sql);
             statement.setString(1,exam);
+            statement.execute();
             ResultSet set = statement.getResultSet();
             while (set != null && set.next()){
                 resource.setExam(set.getString(1));
                 resource.setEr_path(set.getString(2));
-                resource.setEr_volidate(set.getString(3));
                 resource.setKr_path(cutNull(set.getString(4)));
-                resource.setKr_volidate(cutNull(set.getString(5)));
                 resource.setRr_path(cutNull(set.getString(6)));
-                resource.setRr_volidate(cutNull(set.getString(7)));
             }
             set.close();
             statement.close();
@@ -492,17 +489,14 @@ public class UserDao extends GeneralDao implements IUser{
                 case 0:
                     //试卷
                     path = resource.getEr_path();
-                    volidate = resource.getEr_volidate();
                     break;
                 case 1:
                     //答案
                     path = resource.getKr_path();
-                    volidate = resource.getKr_volidate();
                     break;
                 case 2:
                     //音频
                     path = resource.getRr_path();
-                    volidate = resource.getRr_volidate();
                     break;
                 default:
                     break;
@@ -512,7 +506,6 @@ public class UserDao extends GeneralDao implements IUser{
         closeConnection(connection);
         object.put(JSONConstant.RESULT_CODE,resultCode);
         object.put(JSONConstant.RESOURCE_PATH,path);
-        object.put(JSONConstant.RESOURCE_VOLIDATE,volidate);
 
 
 
@@ -530,7 +523,6 @@ public class UserDao extends GeneralDao implements IUser{
             statement.setString(1,generalId);
             statement.setString(2,user);
             statement.setString(3,exam);
-            statement.registerOutParameter(4,Types.INTEGER);
             statement.execute();
             statement.close();
         } catch (SQLException e) {

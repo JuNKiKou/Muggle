@@ -332,7 +332,7 @@
       <data-type>text|0</data-type>
     </column>
     <column id="110" parent="17" name="er_volidate">
-      <data-type>char(16)|0</data-type>
+      <data-type>char(32)|0</data-type>
     </column>
     <key id="111" parent="17" name="PRIMARY">
       <columns>er_id</columns>
@@ -433,7 +433,7 @@
       <data-type>text|0</data-type>
     </column>
     <column id="134" parent="20" name="kr_volidate">
-      <data-type>char(16)|0</data-type>
+      <data-type>char(32)|0</data-type>
     </column>
     <key id="135" parent="20" name="PRIMARY">
       <columns>kr_id</columns>
@@ -686,7 +686,7 @@
       <data-type>text|0</data-type>
     </column>
     <column id="193" parent="26" name="rr_volidate">
-      <data-type>char(16)|0</data-type>
+      <data-type>char(32)|0</data-type>
     </column>
     <key id="194" parent="26" name="PRIMARY">
       <columns>rr_id</columns>
@@ -843,279 +843,285 @@
       <mandatory>1</mandatory>
       <data-type>date|0</data-type>
     </column>
-    <key id="232" parent="32" name="PRIMARY">
+    <index id="232" parent="32" name="FK_upload_exam">
+      <columns>exam</columns>
+      <desc-columns />
+    </index>
+    <key id="233" parent="32" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <argument id="233" parent="33" name="telephone">
+    <foreign-key id="234" parent="32" name="FK_upload_exam">
+      <columns>exam</columns>
+      <ref-key>~.Examination.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <argument id="235" parent="33" name="telephone">
       <direction>IN</direction>
       <data-type>char(11)|0</data-type>
     </argument>
-    <argument id="234" parent="33" name="password">
+    <argument id="236" parent="33" name="password">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="235" parent="33" name="resultCode">
+    <argument id="237" parent="33" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="236" parent="34" name="id">
+    <argument id="238" parent="34" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="237" parent="34" name="age">
+    <argument id="239" parent="34" name="age">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="238" parent="34" name="resultCode">
+    <argument id="240" parent="34" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="239" parent="35" name="id">
+    <argument id="241" parent="35" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="240" parent="35" name="header">
+    <argument id="242" parent="35" name="header">
       <direction>IN</direction>
       <data-type>text|0</data-type>
     </argument>
-    <argument id="241" parent="35" name="resultCode">
+    <argument id="243" parent="35" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="242" parent="36" name="id">
+    <argument id="244" parent="36" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="243" parent="36" name="nick">
+    <argument id="245" parent="36" name="nick">
       <direction>IN</direction>
       <data-type>varchar(100)|0</data-type>
     </argument>
-    <argument id="244" parent="36" name="resultCode">
+    <argument id="246" parent="36" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="245" parent="37" name="id">
+    <argument id="247" parent="37" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="246" parent="37" name="place">
+    <argument id="248" parent="37" name="place">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="247" parent="37" name="resultCode">
+    <argument id="249" parent="37" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="248" parent="38" name="id">
+    <argument id="250" parent="38" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="249" parent="38" name="sex">
+    <argument id="251" parent="38" name="sex">
       <direction>IN</direction>
       <data-type>bit(1)|0</data-type>
     </argument>
-    <argument id="250" parent="38" name="resultCode">
+    <argument id="252" parent="38" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="251" parent="39" name="id">
+    <argument id="253" parent="39" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="252" parent="39" name="sign">
+    <argument id="254" parent="39" name="sign">
       <direction>IN</direction>
       <data-type>varchar(50)|0</data-type>
     </argument>
-    <argument id="253" parent="39" name="resultCode">
+    <argument id="255" parent="39" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="254" parent="40" name="id">
+    <argument id="256" parent="40" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="255" parent="40" name="telephone">
+    <argument id="257" parent="40" name="telephone">
       <direction>IN</direction>
       <data-type>char(11)|0</data-type>
     </argument>
-    <argument id="256" parent="40" name="password">
+    <argument id="258" parent="40" name="password">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="257" parent="40" name="nick">
+    <argument id="259" parent="40" name="nick">
       <direction>IN</direction>
       <data-type>varchar(100)|0</data-type>
     </argument>
-    <argument id="258" parent="40" name="resultCode">
+    <argument id="260" parent="40" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="259" parent="42" name="id">
+    <argument id="261" parent="42" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="260" parent="42" name="o_pwd">
+    <argument id="262" parent="42" name="o_pwd">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="261" parent="42" name="n_pwd">
+    <argument id="263" parent="42" name="n_pwd">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="262" parent="42" name="resultCode">
+    <argument id="264" parent="42" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="263" parent="43" name="id">
+    <argument id="265" parent="43" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="264" parent="43" name="user">
+    <argument id="266" parent="43" name="user">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="265" parent="43" name="rank">
+    <argument id="267" parent="43" name="rank">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="266" parent="43" name="resultCode">
+    <argument id="268" parent="43" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="267" parent="44" name="id">
+    <argument id="269" parent="44" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="268" parent="44" name="user">
+    <argument id="270" parent="44" name="user">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="269" parent="44" name="rank">
+    <argument id="271" parent="44" name="rank">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="270" parent="44" name="rate">
+    <argument id="272" parent="44" name="rate">
       <direction>IN</direction>
       <data-type>double|0</data-type>
     </argument>
-    <argument id="271" parent="44" name="resultCode">
+    <argument id="273" parent="44" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="272" parent="46" name="id">
+    <argument id="274" parent="46" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="273" parent="46" name="user">
+    <argument id="275" parent="46" name="user">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="274" parent="46" name="content">
+    <argument id="276" parent="46" name="content">
       <direction>IN</direction>
       <data-type>text|0</data-type>
     </argument>
-    <argument id="275" parent="46" name="resultCode">
+    <argument id="277" parent="46" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="276" parent="48" name="keyword">
+    <argument id="278" parent="48" name="keyword">
       <direction>IN</direction>
       <data-type>varchar(20)|0</data-type>
     </argument>
-    <argument id="277" parent="48" name="type">
+    <argument id="279" parent="48" name="type">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="278" parent="48" name="rank">
+    <argument id="280" parent="48" name="rank">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="279" parent="48" name="method">
+    <argument id="281" parent="48" name="method">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="280" parent="49" name="keyword">
+    <argument id="282" parent="49" name="keyword">
       <direction>IN</direction>
       <data-type>varchar(20)|0</data-type>
     </argument>
-    <argument id="281" parent="49" name="type">
+    <argument id="283" parent="49" name="type">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="282" parent="49" name="rank">
+    <argument id="284" parent="49" name="rank">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="283" parent="49" name="method">
+    <argument id="285" parent="49" name="method">
       <direction>IN</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="284" parent="51" name="id">
+    <argument id="286" parent="51" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="285" parent="51" name="user">
+    <argument id="287" parent="51" name="user">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="286" parent="51" name="exam">
+    <argument id="288" parent="51" name="exam">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="287" parent="51" name="value">
+    <argument id="289" parent="51" name="value">
       <direction>IN</direction>
       <data-type>double|0</data-type>
     </argument>
-    <argument id="288" parent="51" name="resultCode">
+    <argument id="290" parent="51" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="289" parent="54" name="id">
+    <argument id="291" parent="54" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="290" parent="54" name="user">
+    <argument id="292" parent="54" name="user">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="291" parent="54" name="exam">
+    <argument id="293" parent="54" name="exam">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="292" parent="54" name="resultCode">
+    <argument id="294" parent="54" name="resultCode">
       <direction>OUT</direction>
       <data-type>int(11)|0</data-type>
     </argument>
-    <argument id="293" parent="55" name="exam">
+    <argument id="295" parent="55" name="exam">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="294" parent="56" name="id">
+    <argument id="296" parent="56" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="295" parent="56" name="user">
+    <argument id="297" parent="56" name="user">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="296" parent="56" name="exam">
+    <argument id="298" parent="56" name="exam">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="297" parent="56" name="resultCode">
-      <direction>OUT</direction>
-      <data-type>int(11)|0</data-type>
-    </argument>
-    <argument id="298" parent="58" name="exam">
+    <argument id="299" parent="58" name="exam">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="299" parent="59" name="exam">
+    <argument id="300" parent="59" name="exam">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>
-    <argument id="300" parent="60" name="id">
+    <argument id="301" parent="60" name="id">
       <direction>IN</direction>
       <data-type>char(16)|0</data-type>
     </argument>

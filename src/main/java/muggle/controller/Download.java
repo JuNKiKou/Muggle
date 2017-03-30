@@ -41,8 +41,11 @@ public class Download extends HttpServlet{
             JsonHelper.showJson(resp,objectStr);
             return;
         }
+        if (!object.has(JSONConstant.RESOURCE_PATH)){
+            //文件不存在
+            return;
+        }
         String path = object.getString(JSONConstant.RESOURCE_PATH);
-        String volidate = object.getString(JSONConstant.RESOURCE_VOLIDATE);
 
         switch (type){
             case 0:

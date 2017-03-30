@@ -62,6 +62,7 @@ CREATE TABLE `Answer` (
 
 LOCK TABLES `Answer` WRITE;
 /*!40000 ALTER TABLE `Answer` DISABLE KEYS */;
+INSERT INTO `Answer` VALUES ('A000000000000001','A'),('A000000000000002','A'),('A000000000000003','B'),('A000000000000004','C'),('A000000000000005','A'),('A000000000000006','B'),('A000000000000007','D'),('A000000000000008','A'),('A000000000000009','B'),('A000000000000010','C'),('A000000000000011','A'),('A000000000000012','C'),('A000000000000013','A'),('A000000000000014','C'),('A000000000000015','B'),('A000000000000016','B'),('A000000000000017','B'),('A000000000000018','A'),('A000000000000019','B'),('A000000000000020','A'),('A000000000000021','B'),('A000000000000022','A'),('A000000000000023','C'),('A000000000000024','A'),('A000000000000025','A'),('A000000000000026','B'),('A000000000000027','C'),('A000000000000028','B'),('A000000000000029','C'),('A000000000000030','C');
 /*!40000 ALTER TABLE `Answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,6 +100,7 @@ CREATE TABLE `Examination` (
 
 LOCK TABLES `Examination` WRITE;
 /*!40000 ALTER TABLE `Examination` DISABLE KEYS */;
+INSERT INTO `Examination` VALUES ('E000000000000001',2,5,'ER00000000000001','KR00000000000001',NULL),('E000000000000002',1,5,'ER00000000000002','KR00000000000002','RR00000000000001');
 /*!40000 ALTER TABLE `Examination` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,6 +160,7 @@ CREATE TABLE `ExaminationDownload` (
 
 LOCK TABLES `ExaminationDownload` WRITE;
 /*!40000 ALTER TABLE `ExaminationDownload` DISABLE KEYS */;
+INSERT INTO `ExaminationDownload` VALUES ('ED00000000000001','U000000000000001','E000000000000001','2017-03-30'),('ED00000000000002','U000000000000001','E000000000000001','2017-03-30');
 /*!40000 ALTER TABLE `ExaminationDownload` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +175,7 @@ CREATE TABLE `ExaminationResource` (
   `er_id` char(16) NOT NULL,
   `er_name` varchar(50) NOT NULL,
   `er_path` text,
-  `er_volidate` char(16) DEFAULT NULL,
+  `er_volidate` char(32) DEFAULT NULL,
   PRIMARY KEY (`er_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -183,6 +186,7 @@ CREATE TABLE `ExaminationResource` (
 
 LOCK TABLES `ExaminationResource` WRITE;
 /*!40000 ALTER TABLE `ExaminationResource` DISABLE KEYS */;
+INSERT INTO `ExaminationResource` VALUES ('ER00000000000001','口语训练题1','/Users/JuN/myfile/java/muggle/target/muggle/exam/口语训练题.docx','ca65c57963736f09eca040338c07a16b'),('ER00000000000002','听力训练题1','/Users/JuN/myfile/java/muggle/target/muggle/exam/听力训练题.docx','ca65c57963736f09eca040338c071234');
 /*!40000 ALTER TABLE `ExaminationResource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +231,9 @@ CREATE TABLE `ExaminationUpload` (
   `id` char(16) NOT NULL,
   `exam` char(16) NOT NULL,
   `time` date NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_upload_exam` (`exam`),
+  CONSTRAINT `FK_upload_exam` FOREIGN KEY (`exam`) REFERENCES `Examination` (`e_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -237,6 +243,7 @@ CREATE TABLE `ExaminationUpload` (
 
 LOCK TABLES `ExaminationUpload` WRITE;
 /*!40000 ALTER TABLE `ExaminationUpload` DISABLE KEYS */;
+INSERT INTO `ExaminationUpload` VALUES ('EU00000000000001','E000000000000001','2017-03-30'),('EU00000000000002','E000000000000002','2017-03-30');
 /*!40000 ALTER TABLE `ExaminationUpload` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +287,7 @@ CREATE TABLE `KeyResource` (
   `kr_id` char(16) NOT NULL,
   `kr_name` varchar(50) NOT NULL,
   `kr_path` text,
-  `kr_volidate` char(16) DEFAULT NULL,
+  `kr_volidate` char(32) DEFAULT NULL,
   PRIMARY KEY (`kr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -291,6 +298,7 @@ CREATE TABLE `KeyResource` (
 
 LOCK TABLES `KeyResource` WRITE;
 /*!40000 ALTER TABLE `KeyResource` DISABLE KEYS */;
+INSERT INTO `KeyResource` VALUES ('KR00000000000001','口语训练1答案','/Users/JuN/myfile/java/muggle/target/muggle/key/口语训练1答案.docx','b2cb8e2fcc11627eb1c423df0f2823c0'),('KR00000000000002','听力训练1答案','/Users/JuN/myfile/java/muggle/target/muggle/key/听力训练1答案.docx','b2cb8e2fcc11627eb1c423df0f281234');
 /*!40000 ALTER TABLE `KeyResource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,6 +365,7 @@ CREATE TABLE `Question` (
 
 LOCK TABLES `Question` WRITE;
 /*!40000 ALTER TABLE `Question` DISABLE KEYS */;
+INSERT INTO `Question` VALUES ('Q000000000000001',2,5,'A000000000000001','1. A: If I were you, I would have accepted the job. B:___________ A. I turned down the offer because it would mean frequent business trips away from my family. B. Well, maybe I can recommend you to that company if you like. C. You should have told me earlier it was a good job offer. D. But I don´t think I am qualified for that demanding job. ',NULL,'E000000000000001','1',NULL),('Q000000000000002',2,5,'A000000000000002','2.A. I can´t help thinking that, compared with other cities, Beijing is a very quiet city to live in. B.___________ A. Well, I´m not sure I quite agree. B. Beijing is really a quite modern city, isn´t it? C. Excuse me, which cities are you comparing Beijing with? D. Maybe I have your attention, please. Beijing is a big city, too. ',NULL,'E000000000000001','2',NULL),('Q000000000000003',2,5,'A000000000000003','3.A. Hi, Sally! You are talking to the proud father of a new baby girl! B.___________ A. I´m glad to know that you have got a new baby. B. Congratulations! That´s great news. What´s her name? C. No wonder you look so proud today. I thought you got a promotion. D. Really? Where is your baby girl now? ',NULL,'E000000000000001','3',NULL),('Q000000000000004',2,5,'A000000000000004','4.A: How about seeing a movie with me today, Alan? B:___________ A. I am looking forward to seeing you again. B. Many thanks. C. Sounds great! D. You look great today! ',NULL,'E000000000000001','4',NULL),('Q000000000000005',2,5,'A000000000000005','5.A: Would you mind checking my spelling and punctuation in this literature here, please? B:___________ A. I´m sorry, but my spelling is terrible. B. No, I wouldn´t. C. Yes, go ahead. D. Yes, I would. ',NULL,'E000000000000001','5',NULL),('Q000000000000006',2,5,'A000000000000006','6.A: Excuse me. What subway station am I in? I got lost. B.___________ A. How could you be so thoughtless? B. This is a subway interchange station. C. Fancy meeting you here. D. We can go together. ',NULL,'E000000000000001','6',NULL),('Q000000000000007',2,5,'A000000000000007','7.A: That´ll be ＄6.75. B:___________ A: Enjoy your meal! B: Can I get you anything else? C. Have a good day! D. Here you are. Keep the change.',NULL,'E000000000000001','7',NULL),('Q000000000000008',2,5,'A000000000000008','8.A: OK, how would you like to pay? B:___________ A. Do you take credit cards? B. I´m looking for a sweater. C. That´s nice. Can I try it on? D. Thank you. I´ll have it. ',NULL,'E000000000000001','8',NULL),('Q000000000000009',2,5,'A000000000000009','9.A: Would you like to have some ice-cream? B:___________ A. I´ll say. B. I will diet. C. I don´t feel like eating. D. My goodness! ',NULL,'E000000000000001','9',NULL),('Q000000000000010',2,5,'A000000000000010','10.A: Could you break a 20-dollar bill for me? B:___________ A. Ok, how much is it? B. How can I help you, Miss? C. Sure. How do you want it? D. I thought you were well-off',NULL,'E000000000000001','10',NULL),('Q000000000000011',1,5,'A000000000000011','第一部分：听力（共两节，满分30分）\n该部分分为第一、第二两节。注意：回答听力部分时，请先将答案标在试卷上。听力部分结束时，你将有两分钟的时间将你的答案转涂到客观题答题卡上。\n第一节（共5小题；每小题1.5分，满分7.5分）\n听下面5段对话。每段对话后有一个小题，从题中所给的A、B、C三个选项中选出最佳选项，并标在试卷的相应位置。听完每段对话后，你都有10秒钟的时间来回答有关小题和阅读下一小题。每段对话仅读一遍。\n例：How much is the shirt?\nA. ￡19.15 B. ￡9.18 C. ￡9.15\n答案是C。\n1. What does the man want to do?\nA. Take photos.                             B. Buy a camera.                 C. Help the woman.\n',NULL,'E000000000000002','1',NULL),('Q000000000000012',1,5,'A000000000000012','2.What are the speakers talking about?\nA. A noisy night                     B. Their life in town.           C. A place of living',NULL,'E000000000000002','2',NULL),('Q000000000000013',1,5,'A000000000000013','3.Where is the man now?\nA. On his way.                       B. In a restaurant.                C. At home.\n',NULL,'E000000000000002','3',NULL),('Q000000000000014',1,5,'A000000000000014','4.What will Celia do?\nA. Find a player.                            B. Watch a game.                C. Play basketball.',NULL,'E000000000000002','4',NULL),('Q000000000000015',1,5,'A000000000000015','5.What day is it when the conversation takes place?\nA. Saturday.                            B. Sunday.                          C. Monday.',NULL,'E000000000000002','5',NULL),('Q000000000000016',1,5,'A000000000000016','第二节（共15小题；每小题1.5分，满分22.5分）\n听下面5段对话或独白。每段对话或独白后有几个小题，从题中所给的A、B、C三个选项中选出最佳选项，并标在试卷的相应位置。听每段对话或独白前，你将有时间阅读各个小题，每小题5秒钟；听完后，各小题将给出5秒钟的作答时间。每段对话或独白读两遍。\n听下面一段对话，回答第6至7两个小题。\n6. What is Sara going to do?\nA. Buy John a gift                   B. Invite John to France       C. Give John a surprise\n',NULL,'E000000000000002','6',NULL),('Q000000000000017',1,5,'A000000000000017','7.What does the man think of Sara’s plan?\nA. Funny.                              B. Exciting.                        C. Strange.',NULL,'E000000000000002','7',NULL),('Q000000000000018',1,5,'A000000000000018','听下面一段圣诞，回答第8和第9两个小题\n8. Why does Diana say sorry to Peter?\nA. She has to give up her travel plan.\nB. She wants to visit another city.\nC. She needs to put off her test.\n',NULL,'E000000000000002','8',NULL),('Q000000000000019',1,5,'A000000000000019','9. What does Diana want Peter to do?\nA. Help her with her study.\nB. Take a book to her friend.\nC. Teach a geography lesson.\n',NULL,'E000000000000002','9\n',NULL),('Q000000000000020',1,5,'A000000000000020','听下面一段对话，回答第10至第12三个小题。\n10. Why does the man call the woman?\nA. To tell her about her new job.\nB. To ask about her job program\nC. To plan a meeting with her.\n',NULL,'E000000000000002','10',NULL),('Q000000000000021',1,5,'A000000000000021','11. Who needs a new flat?\nA. Alex.                               B. Andrea.                          C. Miranda.\n',NULL,'E000000000000002','11',NULL),('Q000000000000022',1,5,'A000000000000022','12. Where is the woman now?\nA. In Baltimore.                   B. In New York.                   C. In Avon.\n',NULL,'E000000000000002','12',NULL),('Q000000000000023',1,5,'A000000000000023','听下面一段对话，回答第13至16四个小题。\n13. What does Jan consider most important when he judges a restaurant?\nA. Where the restaurant is.\nB. Whether the prices are low.\nC. How well the food is prepared.\n',NULL,'E000000000000002','13',NULL),('Q000000000000024',1,5,'A000000000000024','14. When did Jan begin to write for a magazine?\nA. After he came back to Sweden.\nB. Before he went to the United States.\nC. As soon as he got his first job in 1982.\n',NULL,'E000000000000002','14',NULL),('Q000000000000025',1,5,'A000000000000025','15. What may Jan do to find a good restaurant?\nA. Talk to people in the street.\nB. Speak to taxi drivers.\nC. Ask hotel clerks.\n',NULL,'E000000000000002','15',NULL),('Q000000000000026',1,5,'A000000000000026','16. What do we know about Jan?\nA. He cooks for a restaurant.\nB. He travels a lot for his work.\nC. He prefers American food.\n',NULL,'E000000000000002','16',NULL),('Q000000000000027',1,5,'A000000000000027','听下面一段独白，回答第17至20四个小题。\n17. What do we know about the Plaza Leon?\nA. It’s a new building.                  B. It’s a small town.             C. It’s a public place.\n',NULL,'E000000000000002','17',NULL),('Q000000000000028',1,5,'A000000000000028','18. When do parents and children like going to the Plaza Leon?\nA. Saturday nights.                             B. Sunday afternoon.            C. Fridays and Saturdays.\n',NULL,'E000000000000002','18',NULL),('Q000000000000029',1,5,'A000000000000029','19. Which street is known for its food shops and markets?\nA. Via Del Mar Street.                  B. Fernando Street.                     C. Hernandes Street.\n',NULL,'E000000000000002','19',NULL),('Q000000000000030',1,5,'A000000000000030','20. Why does the speaker like Horatio Street best?\nA. It has an old stone surface.    B. It is named after a writer.  C. It has a famous university.\n',NULL,'E000000000000002','20',NULL);
 /*!40000 ALTER TABLE `Question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,7 +469,7 @@ CREATE TABLE `RadioResource` (
   `rr_id` char(16) NOT NULL,
   `rr_name` varchar(50) NOT NULL,
   `rr_path` text,
-  `rr_volidate` char(16) DEFAULT NULL,
+  `rr_volidate` char(32) DEFAULT NULL,
   PRIMARY KEY (`rr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -471,6 +480,7 @@ CREATE TABLE `RadioResource` (
 
 LOCK TABLES `RadioResource` WRITE;
 /*!40000 ALTER TABLE `RadioResource` DISABLE KEYS */;
+INSERT INTO `RadioResource` VALUES ('RR00000000000001','听力训练1音频','/Users/JuN/myfile/java/muggle/target/muggle/radio/听力训练1音频.mp3','ca65c57963736f09eca040338c075678');
 /*!40000 ALTER TABLE `RadioResource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -577,6 +587,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES ('U000000000000001','12345678910','\0','1234567891234567',NULL,'haha',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -651,12 +662,10 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `download`(
     in id char(16),
     in user char(16),
-    in exam char(16),
-    out resultCode int
+    in exam char(16)
   )
 BEGIN
     insert into ExaminationDownload values(id,user,exam,curdate());
-    set resultCode = 1;
   END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1806,4 +1815,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-30 13:06:50
+-- Dump completed on 2017-03-30 16:39:29
