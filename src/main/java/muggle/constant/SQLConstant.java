@@ -12,9 +12,25 @@ public class SQLConstant {
 
     public static final String USER_ID_INIT = "U000000000000001";
 
+    public static final String EXAMINATION_STAR_ID_INIT = "ES00000000000001";
+
+    public static final String EXAMINATION_COLLECTION_ID_INIT = "EC00000000000001";
+
+    public static final String ID_INIT = "0000000000000001";
+
     public static final String SQL_PROCEDURE_GET_USER_ID = "{call getUserId()}";
 
+    public static final String SQL_PROCEDURE_GET_STUDY_STATUS_ID = "{call getStudyStatusId()}";
+
+    public static final String SQL_PROCEDURE_GET_ADVICE_ID = "{call getAdviceId()}";
+
+    public static final String SQL_PROCEDURE_GET_STAR_ID = "{call getStarId()}";
+
+    public static final String SQL_PROCEDURE_GET_COLLECTION_ID = "{call getCollectionId()}";
+
     public static final String USER_NICK_HEAD = "用户";
+
+    public static final String ID_HEAD = "";
 
     public static final String USER_HEAD = "U";
 
@@ -62,11 +78,33 @@ public class SQLConstant {
 
     public static final String SQL_PROCEDURE_MODIFY_PWD = "{call modifyPassword(?,?,?,?)}";
 
-    public static final String SQL_GET_USER_ID_EXCEPTION = "获取用户ID的数据库操作出错";
+    public static final String SQL_PROCEDURE_SET_STUDY_STATUS = "{call setStudyStatus(?,?,?,?)}";
+
+    public static final String SQL_PROCEDURE_GIVE_ADVICE = "{call giveAdvice(?,?,?,?)}";
+
+    public static final String SQL_PROCEDURE_SEARCH_QUESTION = "{call searchQuestion(?,?,?,?)}";
+
+    public static final String SQL_PROCEDURE_SEARCH_EXAMINATION = "{call searchExamination(?,?,?,?)}";
+
+    public static final String SQL_PROCEDURE_GET_NEWS = "{call getNews()}";
+
+    public static final String SQL_PROCEDURE_STAR = "{call star(?,?,?,?,?)}";
+
+    public static final String SQL_PROCEDURE_COLLECT = "{call collect(?,?,?,?)}";
+
+    public static final String SQL_GET_GENERAL_ID_EXCEPTION = "获取编号数据库操作出错";
 
     public static final String SQL_REGISTER_EXCEPTION = "注册出错";
 
     public static final String SQL_LOGIN_EXCEPTION = "登录出错";
 
     public static final String SQL_MODIFY_MESSAGE_EXCEPTION = "修改信息出错";
+
+    public static final String SQL_SEARCH_EXCEPTION = "查找内容出错";
+
+    public static final String SQL_GET_NEWS_EXCEPTION = "获取最新资源出错";
+
+    public static final String SQL_EXAMINATION_STAR_EXCEPTION = "评分资源出错";
+
+    public static final String SQL_EXAMINATION_COLLECT_EXCEPTION = "收藏资源出错";
 }

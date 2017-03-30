@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 修改密码的控制器
+ * 设置学习方向的控制器
  *
  * @authorJuN
- * @create2017-03-29 10:12
+ * @create2017-03-29 12:37
  */
-public class ModifyPassword extends HttpServlet{
+public class SetStatus extends HttpServlet{
 
     private UserService service = UserService.getInstance();
 
@@ -27,9 +27,9 @@ public class ModifyPassword extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(EncodingConstant.UTF8);
         String id = req.getParameter(RequestParamConstant.ID);
-        String o_pwd = req.getParameter(RequestParamConstant.OLD_PASSWORD);
-        String n_pwd = req.getParameter(RequestParamConstant.NEW_PASSWORD);
-        String result = service.modifyPassword(id,o_pwd,n_pwd);
+        String rankStr = req.getParameter(RequestParamConstant.RANK);
+        int rank = Integer.parseInt(rankStr);
+        String result = service.setStatus(id,rank);
         JsonHelper.showJson(resp,result);
     }
 }

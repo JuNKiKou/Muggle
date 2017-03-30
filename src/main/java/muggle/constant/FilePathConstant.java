@@ -12,4 +12,9 @@ public class FilePathConstant {
 
     public static final String USER_HEADER_SAVE_PATH = "/header";
 
+    public static final String EXAMINATION_RESOURCE_SAVE_PATH = "/exam";
+
+    public static final String KEY_RESOURCE_SAVE_PATH = "/key";
+
+    public static final String RADIO_RESOURCE_SAVE_PATH = "/radio";
 }

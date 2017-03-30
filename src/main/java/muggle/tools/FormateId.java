@@ -2,6 +2,13 @@ package muggle.tools;/**
  * Created by JuN on 2017/3/25.
  */
 
+import muggle.constant.SQLConstant;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * 格式化id的工具类
  *
@@ -25,7 +32,7 @@ public class FormateId {
         return builder.toString();
     }
 
-    public static String getGeneralId(String id,String head){
+    private static String getGeneralId(String id,String head){
         String number = getNumber(id,head);
         int num = Integer.parseInt(number);
         num = num + 1;
@@ -37,6 +44,33 @@ public class FormateId {
         int headerLength = head.length();
         String number = id.substring(headerLength);
         return number;
+    }
+
+    public static String getGeneralId(Connection connection, String sql, String initId, String header){
+
+        String id = null;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.execute();
+            ResultSet set = statement.getResultSet();
+            while (set.next()){
+                id = set.getString(1);
+            }
+            set.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_GET_GENERAL_ID_EXCEPTION);
+            e.printStackTrace();
+        }
+
+        if (id != null){
+            id = getGeneralId(id,header);
+        }else {
+            id = initId;
+        }
+
+        return id;
+
     }
 
 }

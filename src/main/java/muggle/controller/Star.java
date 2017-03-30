@@ -14,22 +14,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 修改密码的控制器
+ * 评分的控制器
  *
  * @authorJuN
- * @create2017-03-29 10:12
+ * @create2017-03-29 21:28
  */
-public class ModifyPassword extends HttpServlet{
+public class Star extends HttpServlet{
 
     private UserService service = UserService.getInstance();
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(EncodingConstant.UTF8);
         String id = req.getParameter(RequestParamConstant.ID);
-        String o_pwd = req.getParameter(RequestParamConstant.OLD_PASSWORD);
-        String n_pwd = req.getParameter(RequestParamConstant.NEW_PASSWORD);
-        String result = service.modifyPassword(id,o_pwd,n_pwd);
+        String exam = req.getParameter(RequestParamConstant.EXAM);
+        String valueStr = req.getParameter(RequestParamConstant.VALUE);
+        double value = Double.parseDouble(valueStr);
+        String result = service.star(id,exam,value);
         JsonHelper.showJson(resp,result);
     }
 }

@@ -17,6 +17,12 @@ public class JSONConstant {
 
     public static final String RESULT_CODE = "resultCode";
 
+    public static final String QUESTIONS = "questions";
+
+    public static final String EXAMINATIONS = "examinations";
+
+    public static final String NEWS = "news";
+
     public static final String USER_ID  = "u_id";
 
     public static final String USER = "user";

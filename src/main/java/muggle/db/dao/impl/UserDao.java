@@ -7,8 +7,13 @@ import muggle.constant.SQLConstant;
 import muggle.db.dao.IUser;
 import muggle.db.unity.DB;
 import muggle.entity.EUser;
+import muggle.entity.Examination;
+import muggle.entity.News;
+import muggle.entity.Question;
 import muggle.tools.FormateId;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.lang.reflect.Type;
 import java.sql.*;
@@ -38,27 +43,8 @@ public class UserDao extends GeneralDao implements IUser{
 
         //生成用户的ID信息
         String sql = SQLConstant.SQL_PROCEDURE_GET_USER_ID;
-        String userId = null;
         String generalId = null;
-        try {
-            CallableStatement statement = connection.prepareCall(sql);
-            statement.execute();
-            ResultSet set = statement.getResultSet();
-            while (set.next()){
-                userId = set.getString(1);
-            }
-            statement.close();
-        } catch (SQLException e) {
-            System.out.println(SQLConstant.SQL_GET_USER_ID_EXCEPTION);
-            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
-            e.printStackTrace();
-        }
-
-        if (userId != null){
-            generalId = FormateId.getGeneralId(userId,SQLConstant.USER_HEAD);
-        }else {
-            generalId = SQLConstant.USER_ID_INIT;
-        }
+        generalId = FormateId.getGeneralId(connection,sql,SQLConstant.USER_ID_INIT,SQLConstant.USER_HEAD);
 
         //插入数据
         int code;
@@ -264,4 +250,214 @@ public class UserDao extends GeneralDao implements IUser{
         object.put(JSONConstant.RESULT_CODE,resultCode);
         return object.toString();
     }
+
+    public String setStudyStatus(String id, int rank) {
+        JSONObject object = new JSONObject();
+        Connection connection = getConnection();
+        String sql = SQLConstant.SQL_PROCEDURE_GET_STUDY_STATUS_ID;
+        String generalId;
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        generalId = FormateId.getGeneralId(connection,sql,SQLConstant.ID_INIT,SQLConstant.ID_HEAD);
+
+        sql = SQLConstant.SQL_PROCEDURE_SET_STUDY_STATUS;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,generalId);
+            statement.setString(2,id);
+            statement.setInt(3,rank);
+            statement.registerOutParameter(4,Types.INTEGER);
+            statement.execute();
+            int code = statement.getInt(4);
+            if (code == 1){
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+            }else {
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        return object.toString();
+    }
+
+    public String giveAdvice(String id, String content) {
+        JSONObject object = new JSONObject();
+        Connection connection = getConnection();
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        String sql = SQLConstant.SQL_PROCEDURE_GET_ADVICE_ID;
+        String generalId = FormateId.getGeneralId(connection,sql,SQLConstant.ID_INIT,SQLConstant.ID_HEAD);
+        sql = SQLConstant.SQL_PROCEDURE_GIVE_ADVICE;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,generalId);
+            statement.setString(2,id);
+            statement.setString(3,content);
+            statement.registerOutParameter(4,Types.INTEGER);
+            statement.execute();
+            int code = statement.getInt(4);
+            if (code == 1){
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+            }else {
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        return object.toString();
+    }
+
+    public String search(String keyword, int type, int rank, int method) {
+        JSONObject object = new JSONObject();
+        JSONArray questions = new JSONArray();
+        JSONArray examinations = new JSONArray();
+        Connection connection = getConnection();
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        String sql = SQLConstant.SQL_PROCEDURE_SEARCH_QUESTION;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,keyword);
+            statement.setInt(2,type);
+            statement.setInt(3,rank);
+            statement.setInt(4,method);
+            statement.execute();
+            ResultSet set = statement.getResultSet();
+            while (set != null && set.next()){
+                Question question = new Question(set.getString(1),set.getInt(2),set.getInt(3),set.getDouble(4));
+                JSONObject item = new JSONObject();
+                Question.fixValue(item,question);
+                questions.put(item);
+            }
+            set.close();
+            statement.close();
+            sql = SQLConstant.SQL_PROCEDURE_SEARCH_EXAMINATION;
+            CallableStatement statement2 = connection.prepareCall(sql);
+            statement2.setString(1,keyword);
+            statement2.setInt(2,type);
+            statement2.setInt(3,rank);
+            statement2.setInt(4,method);
+            statement2.execute();
+            ResultSet set2 = statement2.getResultSet();
+            while (set2 != null && set2.next()){
+                Examination examination = new Examination(set2.getString(1),set2.getInt(2),set2.getInt(3),set2.getDouble(4),set2.getInt(5));
+                JSONObject item = new JSONObject();
+                Examination.fixValue(item,examination);
+                examinations.put(item);
+            }
+            set2.close();
+            statement2.close();
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_SEARCH_EXCEPTION);
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        object.put(JSONConstant.QUESTIONS,questions);
+        object.put(JSONConstant.EXAMINATIONS,examinations);
+        return object.toString();
+    }
+
+    public String getNews() {
+        JSONObject object = new JSONObject();
+        JSONArray array = new JSONArray();
+        Connection connection = getConnection();
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        String sql = SQLConstant.SQL_PROCEDURE_GET_NEWS;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.execute();
+            ResultSet set = statement.getResultSet();
+            while (set != null && set.next()){
+                News news = new News(set.getString(1),set.getString(2),set.getDate(3).toString());
+                JSONObject item = new JSONObject();
+                News.fixValue(item,news);
+                array.put(item);
+            }
+            set.close();
+            statement.close();
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_GET_NEWS_EXCEPTION);
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        object.put(JSONConstant.NEWS,array);
+        return object.toString();
+    }
+
+    public String star(String user, String exam, double value) {
+        JSONObject object = new JSONObject();
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        Connection connection = getConnection();
+        String sql = SQLConstant.SQL_PROCEDURE_GET_STAR_ID;
+        String generalId = FormateId.getGeneralId(connection,sql,SQLConstant.EXAMINATION_STAR_ID_INIT,SQLConstant.EXAMINATION_STAR_HEAD);
+
+        sql = SQLConstant.SQL_PROCEDURE_STAR;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,generalId);
+            statement.setString(2,user);
+            statement.setString(3,exam);
+            statement.setDouble(4,value);
+            statement.registerOutParameter(5,Types.INTEGER);
+            statement.execute();
+            int code = statement.getInt(5);
+            if (code == 1){
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+            }else {
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_EXAMINATION_STAR_EXCEPTION);
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        return object.toString();
+    }
+
+    public String collect(String user, String exam) {
+        JSONObject object = new JSONObject();
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        Connection connection = getConnection();
+        String sql = SQLConstant.SQL_PROCEDURE_GET_COLLECTION_ID;
+        String generalId = FormateId.getGeneralId(connection,sql,SQLConstant.EXAMINATION_COLLECTION_ID_INIT,SQLConstant.EXAMINATION_COLLECTION_HEAD);
+        sql = SQLConstant.SQL_PROCEDURE_COLLECT;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,generalId);
+            statement.setString(2,user);
+            statement.setString(3,exam);
+            statement.registerOutParameter(4,Types.INTEGER);
+            statement.execute();
+            int code = statement.getInt(4);
+            if (code == 1){
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+            }else {
+                resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_EXAMINATION_COLLECT_EXCEPTION);
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        return object.toString();
+    }
 }
+

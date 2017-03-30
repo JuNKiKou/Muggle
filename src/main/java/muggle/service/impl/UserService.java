@@ -70,4 +70,28 @@ public class UserService implements IUserService{
     public String modifyPassword(String id, String o_pwd, String n_pwd) {
         return dao.modifyPassword(id,o_pwd,n_pwd);
     }
+
+    public String setStatus(String id, int rank) {
+        return dao.setStudyStatus(id,rank);
+    }
+
+    public String giveAdvice(String id, String content) {
+        return dao.giveAdvice(id,content);
+    }
+
+    public String search(String keyword, int type, int rank, int method) {
+        return dao.search(keyword,type,rank,method);
+    }
+
+    public String getNews() {
+        return dao.getNews();
+    }
+
+    public String star(String user, String exam, double value) {
+        return dao.star(user,exam,value);
+    }
+
+    public String collect(String user, String exam) {
+        return dao.collect(user,exam);
+    }
 }

@@ -20,6 +20,20 @@ public class RequestParamConstant {
 
     public static final String COLUMN = "column";
 
+    public static final String KEYWORD = "keyword";
+
+    public static final String EXAM = "exam";
+
+    public static final String VALUE = "value";
+
+    public static final String TYPE = "type";
+
+    public static final String RANK = "rank";
+
+    public static final String METHOD = "method";
+
+    public static final String ADVICE = "advice";
+
     public static final String OLD_PASSWORD = "o_pwd";
 
     public static final String NEW_PASSWORD = "n_pwd";

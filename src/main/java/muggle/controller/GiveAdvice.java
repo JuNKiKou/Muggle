@@ -5,6 +5,7 @@ package muggle.controller;/**
 import muggle.constant.EncodingConstant;
 import muggle.constant.RequestParamConstant;
 import muggle.controller.helper.JsonHelper;
+import muggle.db.dao.impl.UserDao;
 import muggle.service.impl.UserService;
 
 import javax.servlet.ServletException;
@@ -14,12 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 修改密码的控制器
+ * 反馈的控制器
  *
  * @authorJuN
- * @create2017-03-29 10:12
+ * @create2017-03-29 13:29
  */
-public class ModifyPassword extends HttpServlet{
+public class GiveAdvice extends HttpServlet{
 
     private UserService service = UserService.getInstance();
 
@@ -27,9 +28,8 @@ public class ModifyPassword extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(EncodingConstant.UTF8);
         String id = req.getParameter(RequestParamConstant.ID);
-        String o_pwd = req.getParameter(RequestParamConstant.OLD_PASSWORD);
-        String n_pwd = req.getParameter(RequestParamConstant.NEW_PASSWORD);
-        String result = service.modifyPassword(id,o_pwd,n_pwd);
+        String content = req.getParameter(RequestParamConstant.ADVICE);
+        String result = service.giveAdvice(id,content);
         JsonHelper.showJson(resp,result);
     }
 }

@@ -14,4 +14,7 @@ public class FileConstant {
 
     public static final String FILE_MESSAGE_FETCH_EXCEPTION = "文件信息获取失败";
 
+    public static final String FILE_DOWNLOAD_EXCEPTION = "文件下载失败";
+
+    public static final String FILE_CAN_NOT_FOUND_EXCEPTION = "文件不存在";
 }

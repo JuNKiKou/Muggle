@@ -2,6 +2,7 @@ package muggle.controller;/**
  * Created by JuN on 2017/3/25.
  */
 
+import muggle.constant.EncodingConstant;
 import muggle.constant.RequestParamConstant;
 import muggle.constant.ResponseConstant;
 import muggle.controller.helper.JsonHelper;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 /**
  * 注册的控制器
@@ -27,6 +29,11 @@ public class Register extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException{
+        try {
+            req.setCharacterEncoding(EncodingConstant.UTF8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         String phone = req.getParameter(RequestParamConstant.TELEPHONE_NUMBER);
         String password = req.getParameter(RequestParamConstant.PASSWORD);
         String result;

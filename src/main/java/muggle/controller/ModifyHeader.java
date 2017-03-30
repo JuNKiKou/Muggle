@@ -2,6 +2,7 @@ package muggle.controller;/**
  * Created by JuN on 2017/3/27.
  */
 
+import muggle.constant.EncodingConstant;
 import muggle.constant.JSONConstant;
 import muggle.constant.RequestParamConstant;
 import muggle.controller.helper.JsonHelper;
@@ -27,6 +28,7 @@ public class ModifyHeader extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding(EncodingConstant.UTF8);
         String builder = UploadFileHelper.uploadHeader(this.getServletContext(),req,resp);
         JSONObject object = new JSONObject(builder);
         String id = object.getString(RequestParamConstant.ID);

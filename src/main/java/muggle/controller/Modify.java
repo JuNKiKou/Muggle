@@ -2,6 +2,7 @@ package muggle.controller;/**
  * Created by JuN on 2017/3/26.
  */
 
+import muggle.constant.EncodingConstant;
 import muggle.constant.RequestParamConstant;
 import muggle.controller.helper.JsonHelper;
 import muggle.helper.UploadFileHelper;
@@ -25,6 +26,7 @@ public class Modify extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding(EncodingConstant.UTF8);
         String id = req.getParameter(RequestParamConstant.ID);
         String index = req.getParameter(RequestParamConstant.COLUMN);
         String param = req.getParameter(RequestParamConstant.PARAM);

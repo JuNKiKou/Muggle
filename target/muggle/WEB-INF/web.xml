@@ -31,6 +31,36 @@
         <servlet-class>muggle.controller.ModifyPassword</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>setStatus</servlet-name>
+        <servlet-class>muggle.controller.SetStatus</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>giveAdvice</servlet-name>
+        <servlet-class>muggle.controller.GiveAdvice</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>search</servlet-name>
+        <servlet-class>muggle.controller.Search</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>getNews</servlet-name>
+        <servlet-class>muggle.controller.GetNews</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>star</servlet-name>
+        <servlet-class>muggle.controller.Star</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>collect</servlet-name>
+        <servlet-class>muggle.controller.Collect</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -54,5 +84,35 @@
     <servlet-mapping>
         <servlet-name>modifyPassword</servlet-name>
         <url-pattern>/modifyPassword</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>setStatus</servlet-name>
+        <url-pattern>/setStatus</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>giveAdvice</servlet-name>
+        <url-pattern>/giveAdvice</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>search</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>getNews</servlet-name>
+        <url-pattern>/getNews</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>star</servlet-name>
+        <url-pattern>/star</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>collect</servlet-name>
+        <url-pattern>/collect</url-pattern>
     </servlet-mapping>
 </web-app>

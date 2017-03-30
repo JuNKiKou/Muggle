@@ -14,4 +14,12 @@ public class ResponseConstant {
 
     public static final String CONTENT_TYPE_JSON_TYPE = "application/json;charset=utf-8";
 
+    public static final String CONTENT_TYPE = "content-type";
+
+    public static final String CONTENT_TYPE_DOWNLOAD = "application/octet-stream";
+
+    public static final String CONTENT_DISPOSITION = "content-disposition";
+
+    public static final String CONTENT_DISPOSITION_DOWNLOAD = "attachment;filename=";
+
 }
