@@ -6,10 +6,7 @@ import muggle.constant.JSONConstant;
 import muggle.constant.SQLConstant;
 import muggle.db.dao.IUser;
 import muggle.db.unity.DB;
-import muggle.entity.EUser;
-import muggle.entity.Examination;
-import muggle.entity.News;
-import muggle.entity.Question;
+import muggle.entity.*;
 import muggle.tools.FormateId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -459,5 +456,167 @@ public class UserDao extends GeneralDao implements IUser{
         object.put(JSONConstant.RESULT_CODE,resultCode);
         return object.toString();
     }
+
+    public String download(String id, String exam, int type) {
+        JSONObject object = new JSONObject();
+        Connection connection = getConnection();
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        String sql = SQLConstant.SQL_PROCEDURE_GET_RESOURCE;
+        String path = null;
+        String volidate = null;
+        Resource resource = new Resource();
+        try {
+            CallableStatement statement  = connection.prepareCall(sql);
+            statement.setString(1,exam);
+            ResultSet set = statement.getResultSet();
+            while (set != null && set.next()){
+                resource.setExam(set.getString(1));
+                resource.setEr_path(set.getString(2));
+                resource.setEr_volidate(set.getString(3));
+                resource.setKr_path(cutNull(set.getString(4)));
+                resource.setKr_volidate(cutNull(set.getString(5)));
+                resource.setRr_path(cutNull(set.getString(6)));
+                resource.setRr_volidate(cutNull(set.getString(7)));
+            }
+            set.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_GET_RESOURCE_MESSAGE_EXCEPTION);
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        if (resource.getExam() == null){
+            resultCode = JSONConstant.getStatusCode(JSONConstant.NO_SUCH_EXAM);
+        }else {
+            switch (type){
+                case 0:
+                    //试卷
+                    path = resource.getEr_path();
+                    volidate = resource.getEr_volidate();
+                    break;
+                case 1:
+                    //答案
+                    path = resource.getKr_path();
+                    volidate = resource.getKr_volidate();
+                    break;
+                case 2:
+                    //音频
+                    path = resource.getRr_path();
+                    volidate = resource.getRr_volidate();
+                    break;
+                default:
+                    break;
+            }
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        object.put(JSONConstant.RESOURCE_PATH,path);
+        object.put(JSONConstant.RESOURCE_VOLIDATE,volidate);
+
+
+
+
+        return object.toString();
+    }
+
+    public void addDownloadList(String user, String exam) {
+        Connection connection = getConnection();
+        String sql = SQLConstant.SQL_PROCEDURE_GET_DOWNLOAD_ID;
+        String generalId = FormateId.getGeneralId(connection,sql,SQLConstant.EXAMINATION_DOWNLOAD_ID_INIT,SQLConstant.EXAMINATION_DOWNLOAD_HEAD);
+        sql = SQLConstant.SQL_PROCEDURE_ADD_DOWNLOAD_LIST;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,generalId);
+            statement.setString(2,user);
+            statement.setString(3,exam);
+            statement.registerOutParameter(4,Types.INTEGER);
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(SQLConstant.SQL_EXAMINATION_DOWNLOAD_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+
+    }
+
+    private String cutNull(String str){
+        return (str != null) ? str : null;
+    }
+
+    public String getExamination(String exam) {
+        JSONObject object = new JSONObject();
+        JSONObject volidate = new JSONObject();
+        JSONArray array = new JSONArray();
+        Connection connection = getConnection();
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.DEFAULT_RESULT_CODE);
+        String sql = SQLConstant.SQL_PROCEDURE_GET_EXAMINATION;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,exam);
+            statement.execute();
+            ResultSet set = statement.getResultSet();
+            while (set != null && set.next()){
+                Entity entity = new Entity(set.getString(1),set.getString(2),set.getString(3),set.getString(4),set.getString(5));
+                JSONObject item = new JSONObject();
+                Entity.fixValue(item,entity);
+                array.put(item);
+            }
+            set.close();
+            sql = SQLConstant.SQL_PROCEDURE_GET_MD5;
+            statement = connection.prepareCall(sql);
+            statement.setString(1,exam);
+            statement.execute();
+            ResultSet rs = statement.getResultSet();
+            while (rs != null && rs.next()){
+                volidate.put(JSONConstant.EXAM_MD5,rs.getString(2));
+                volidate.put(JSONConstant.KEY_MD5,rs.getString(3));
+                volidate.put(JSONConstant.RADIO_MD5,rs.getString(4));
+            }
+            rs.close();
+
+            statement.close();
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+        } catch (SQLException e) {
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        object.put(JSONConstant.QUESTIONS,array);
+        object.put(JSONConstant.RESOURCE_VOLIDATE,volidate);
+
+        return object.toString();
+    }
+
+    public String getAnswer(String id) {
+        Connection connection = getConnection();
+        JSONObject object = new JSONObject();
+        String answer = null;
+        int resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+        String sql = SQLConstant.SQL_PROCEDURE_GET_ANSWER;
+        try {
+            CallableStatement statement = connection.prepareCall(sql);
+            statement.setString(1,id);
+            statement.execute();
+            ResultSet set = statement.getResultSet();
+            while (set != null && set.next()){
+                answer = set.getString(1);
+            }
+            set.close();
+            statement.close();
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SUCCESS);
+        } catch (SQLException e) {
+            resultCode = JSONConstant.getStatusCode(JSONConstant.SQL_EXECUTE_EXCEPTION);
+            e.printStackTrace();
+        }
+        closeConnection(connection);
+        object.put(JSONConstant.RESULT_CODE,resultCode);
+        object.put(JSONConstant.ANSWER,answer);
+        return null;
+    }
 }
+
+
 

@@ -16,7 +16,10 @@ public class SQLConstant {
 
     public static final String EXAMINATION_COLLECTION_ID_INIT = "EC00000000000001";
 
+    public static final String EXAMINATION_DOWNLOAD_ID_INIT = "ED00000000000001";
+
     public static final String ID_INIT = "0000000000000001";
+
 
     public static final String SQL_PROCEDURE_GET_USER_ID = "{call getUserId()}";
 
@@ -27,6 +30,8 @@ public class SQLConstant {
     public static final String SQL_PROCEDURE_GET_STAR_ID = "{call getStarId()}";
 
     public static final String SQL_PROCEDURE_GET_COLLECTION_ID = "{call getCollectionId()}";
+
+    public static final String SQL_PROCEDURE_GET_DOWNLOAD_ID = "{call getDownloadId()}";
 
     public static final String USER_NICK_HEAD = "用户";
 
@@ -92,6 +97,16 @@ public class SQLConstant {
 
     public static final String SQL_PROCEDURE_COLLECT = "{call collect(?,?,?,?)}";
 
+    public static final String SQL_PROCEDURE_GET_RESOURCE = "{call getResource(?)}";
+
+    public static final String SQL_PROCEDURE_ADD_DOWNLOAD_LIST = "{call download(?,?,?)}";
+
+    public static final String SQL_PROCEDURE_GET_EXAMINATION = "{call getExamination(?)}";
+
+    public static final String SQL_PROCEDURE_GET_MD5 = "{call getMD5(?)}";
+
+    public static final String SQL_PROCEDURE_GET_ANSWER = "{call getAnswer(?)}";
+
     public static final String SQL_GET_GENERAL_ID_EXCEPTION = "获取编号数据库操作出错";
 
     public static final String SQL_REGISTER_EXCEPTION = "注册出错";
@@ -107,4 +122,8 @@ public class SQLConstant {
     public static final String SQL_EXAMINATION_STAR_EXCEPTION = "评分资源出错";
 
     public static final String SQL_EXAMINATION_COLLECT_EXCEPTION = "收藏资源出错";
+
+    public static final String SQL_GET_RESOURCE_MESSAGE_EXCEPTION = "获取资源信息出错";
+
+    public static final String SQL_EXAMINATION_DOWNLOAD_EXCEPTION = "下载资源出错";
 }

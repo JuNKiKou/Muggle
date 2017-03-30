@@ -61,6 +61,21 @@
         <servlet-class>muggle.controller.Collect</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>download</servlet-name>
+        <servlet-class>muggle.controller.Download</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>getExamination</servlet-name>
+        <servlet-class>muggle.controller.GetExamination</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>getAnswer</servlet-name>
+        <servlet-class>muggle.controller.GetAnswer</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -114,5 +129,20 @@
     <servlet-mapping>
         <servlet-name>collect</servlet-name>
         <url-pattern>/collect</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>download</servlet-name>
+        <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>getExamination</servlet-name>
+        <url-pattern>/getExamination</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>getAnswer</servlet-name>
+        <url-pattern>/getAnswer</url-pattern>
     </servlet-mapping>
 </web-app>

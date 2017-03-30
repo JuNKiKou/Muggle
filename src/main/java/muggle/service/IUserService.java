@@ -24,6 +24,14 @@ public interface IUserService {
     public abstract String star(String user,String exam,double value);
 
     public abstract String collect(String user,String exam);
+
+    public abstract String download(String id,String exam,int type);
+
+    public abstract void addDownloadList(String user,String exam);
+
+    public abstract String getExamination(String exam);
+
+    public abstract String getAnswer(String id);
 }
 
 

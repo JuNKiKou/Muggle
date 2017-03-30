@@ -94,4 +94,21 @@ public class UserService implements IUserService{
     public String collect(String user, String exam) {
         return dao.collect(user,exam);
     }
+
+    public String download(String id, String exam, int type) {
+        return dao.download(id,exam,type);
+    }
+
+    public void addDownloadList(String user, String exam) {
+        dao.addDownloadList(user,exam);
+        return;
+    }
+
+    public String getExamination(String exam) {
+        return dao.getExamination(exam);
+    }
+
+    public String getAnswer(String id) {
+        return dao.getAnswer(id);
+    }
 }
